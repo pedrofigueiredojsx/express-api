@@ -38,6 +38,24 @@ app.post("/usuarios", async (request, response) => {
   response.json(usuarioCriado);
 });
 
+app.put("/usuarios/:id", async (request, response) => {
+  const { id } = request.params;
+
+  const usuario = await Usuario.findByIdAndUpdate(id, request.body, {
+    new: true,
+  });
+
+  return response.json(usuario);
+});
+
+app.delete("/usuarios/:id", async (request, response) => {
+  const { id } = request.params;
+
+  await Usuario.findByIdAndDelete(id);
+
+  return response.json({ mensagem: "Usuário deletado com sucesso" });
+});
+
 app.listen(3000, () => {
   console.log("Servidor Rodando na Porta 3000");
 });
